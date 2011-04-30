@@ -1,6 +1,10 @@
+body div {
+	margin: auto;
+	width: 1024px;
+}
+
 div#gameOfLife {
   background-color: white;
-  margin: auto;
   width: 1024px;
   height: 1024px;
   padding: 0; }
@@ -9,4 +13,9 @@ div#browserNotSupported {
   display: none;
   background-color: #eee;
   border: 1px solid black;
-  padding: 1em; }
+  padding: 1em;
+}
+
+span.right {
+	float: right;
+}

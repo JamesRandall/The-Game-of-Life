@@ -1,4 +1,54 @@
-define(["metrics"], function(metrics) {
+define(["metrics"], function(metrics) {	
+	var patterns = {
+		stillLifes: [
+			"010000100",
+			"101001010",
+			"101000110",
+			"010000000",
+			"000000000", // line break
+			"000000000", // line break
+			"110000110",
+			"101001001",
+			"011000101",
+			"000000010",
+			"000000000", // line break
+			"000000000", // line break
+			"110000000",
+			"110000000"
+		],
+		oscillators: [
+		    "0000010",
+		    "1110010",
+			"0000010",
+			"0000000",
+			"0000000",
+			"0011100",
+			"0111000"
+		],
+		gliders: [
+			"01000010",
+			"11000011",
+			"10100101",
+			"000000000", // line break
+			"000000000", // line break
+			"10100101",
+			"11000011",
+			"01000010"
+		],
+		gun: [
+			"00000000000000000000000000000000000000",
+			"00000000000000000000000001000000000000",
+			"00000000000000000000000101000000000000",
+			"00000000000001100000011000000000000110",
+			"00000000000010001000011000000000000110",
+			"01100000000100000100011000000000000000",
+			"01100000000100010110000101000000000000",
+			"00000000000100000100000001000000000000",
+			"00000000000010001000000000000000000000",
+			"00000000000001100000000000000000000000"
+		]
+	};
+	
 	function calculateNeighbours(board) {
 		var neighbours = [];
 		var row;
@@ -53,6 +103,7 @@ define(["metrics"], function(metrics) {
 			}
 			
 			return {
+				generation: 0,
 				width: metrics.boardWidth,
 				height: metrics.boardHeight,
 				cells: board,
@@ -87,6 +138,50 @@ define(["metrics"], function(metrics) {
 							}
 							else {
 								this.setCell(columnIndex, rowIndex, neighbourCount === 3);
+							}
+						}
+					}
+					this.generation++;
+				},
+				clear: function() {
+					var rowIndex;
+					var columnIndex;
+					
+					for (rowIndex = 0; rowIndex < this.height; rowIndex++) {
+						for (columnIndex = 0; columnIndex < this.width; columnIndex++) {
+							this.setCell(columnIndex, rowIndex, false);
+						}
+					}
+				},
+				reset: function(boardType) {
+					var patternWidth;
+					var patternHeight;
+					var left;
+					var top;
+					var x;
+					var y;
+					
+					this.generation = 0;
+					
+					if (boardType === 'random') {
+						this.randomize();
+					}
+					else
+					{
+						this.clear();
+						pattern = patterns[boardType];
+						if (pattern !== null)
+						{
+							patternWidth = pattern[0].length;
+							patternHeight = pattern.length;
+							
+							left = ((this.width - patternWidth)/2).integer();
+							top = ((this.height - patternHeight)/2).integer();
+							
+							for (y=0; y < patternHeight; y++) {
+								for (x=0; x < patternWidth; x++) {
+									this.setCell(left + x, top + y, pattern[y][x] === '1');
+								}
 							}
 						}
 					}
