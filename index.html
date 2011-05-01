@@ -12,12 +12,14 @@
 			<h1>The Game of Life</h1>
 			<p>This is a HTML 5 Canvas and JavaScript implementation of <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">John Conway's Game of Life</a>. It makes use of the JavaScript libraries <a href="http://jquery.com/">jQuery</a> and <a href="http://requirejs.org/">RequireJS</a>.</p>
 			<p>Source code can be found <a href="https://github.com/JamesRandall/The-Game-of-Life">online at GitHub</a> and more information on <a href="http://accidentalfish.wordpress.com">my blog</a>.</p>
+			<p>You can pick from starting patterns below or edit the board by clicking it's cells.</p>
 			<div id="browserNotSupported"><p>Your browser does not support running Game of Life. Please upgrade to a more recent version that supports HTML 5 canvas.</div>
 			<div id="gameOfLife">
 				<div id="toolbar">
 					<span class="right">Generation <span id="generation">0</span></span>
 					<span>
 						<select id="boardType">
+							<option value="empty">Empty</option>
 							<option value="random">Random Board</option>
 							<option value="stillLifes">Still Lifes</option>
 							<option value="oscillators">Osciallators</option>

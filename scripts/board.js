@@ -1,5 +1,6 @@
 define(["metrics"], function(metrics) {	
 	var patterns = {
+		empty: null,
 		stillLifes: [
 			"010000100",
 			"101001010",

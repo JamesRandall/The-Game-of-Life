@@ -12,6 +12,12 @@ define(["jquery", "board", "renderer"], function($,boardFactory,renderer) {
 		paused: true,
 		begin: function() {
 			var that = this;
+			var canvas = $('#gameOfLifeCanvas');
+			
+			function pause() {
+				that.paused = true;
+				$('#startButton').attr('value', 'Start');
+			};
 			
 			$('#startButton').click(function() {
 				var msg = 'Pause';
@@ -22,18 +28,23 @@ define(["jquery", "board", "renderer"], function($,boardFactory,renderer) {
 				$('#startButton').attr('value', msg);
 			});
 			$('#resetButton').click(function() {
-				that.paused = true;
-				$('#startButton').attr('value', 'Start');
+				pause();
 				reset(that.board, $('#boardType').val());
 				generationLabel.html(that.board.generation);
+			});
+			canvas.click(function(e) {
+				pause();
+				var canvasPos = canvas.position();
+				var x = e.pageX - canvasPos.left;
+				var y = e.pageY - canvasPos.top;
+				var boardPosition = renderer.getBoardCoordinates(that.board, x, y);
+				that.board.setCell(boardPosition.x, boardPosition.y, !that.board.isAlive(boardPosition.x, boardPosition.y));
+				renderer.render(that.board);
 			});
 			
 			this.board = boardFactory.create();
 			reset(this.board, 'random');
 			setTimeout(function() { that.nextGeneration(); }, frameRate);
-		},
-		resume: function() {
-			this.paused = false;
 		},
 		nextGeneration: function() {
 			var that = this;

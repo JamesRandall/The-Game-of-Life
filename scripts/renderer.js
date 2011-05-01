@@ -44,7 +44,7 @@ define(["jquery"], function($) {
 		context.arc(
 			centerX,
 			centerY,
-			boardMetrics.cellRadius,//boardMetrics.cellWidth/2,
+			boardMetrics.cellRadius,
 			0,
 			2 * Math.PI,
 			true);
@@ -52,6 +52,16 @@ define(["jquery"], function($) {
 	}
 	
 	return {
+		getBoardCoordinates: function(board, canvasX, canvasY) {
+			var metrics;
+			
+			metrics = boardMetrics(board);
+			return {
+				x: Math.floor(canvasX/metrics.cellWidth),
+				y: Math.floor(canvasY/metrics.cellHeight)
+			};
+		},
+		
 		render: function(board) {
 			var context;
 			var columnIndex;
@@ -61,7 +71,7 @@ define(["jquery"], function($) {
 			metrics = boardMetrics(board);
 			context = getContext();
 			
-			context.clearRect(0, 0, getCanvas().width, getCanvas().height);
+			context.clearRect(0, 0, metrics.width, metrics.height);
 			
 			drawGrid(context, metrics);
 			context.fillStyle = "rgba(38,104,209,1.0)";
