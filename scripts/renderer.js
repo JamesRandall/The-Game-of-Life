@@ -34,8 +34,8 @@ define(["jquery"], function($) {
 	}
 	
 	function drawCell(context, columnIndex, rowIndex, boardMetrics) {
-		var left;
-		var top;
+		var centerX;
+		var centerY;
 		
 		centerX = columnIndex * boardMetrics.cellWidth + 0.5 + boardMetrics.cellWidth/2;
 		centerY = rowIndex * boardMetrics.cellHeight + 0.5 + boardMetrics.cellHeight/2;
